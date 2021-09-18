@@ -1,11 +1,10 @@
+from transformers import GPT2LMHeadModel, GPT2Config, GPT2LMHeadModel, AdamW
 import pytorch_lightning as pl
-from transformers import AdamW
-from transformers import GPT2LMHeadModel, GPT2Config, GPT2LMHeadModel
 import logging
 import random
 
-from config import config
 from tokenizer import tokenizer
+from config import config
 
 LEARNING_RATE = config["learning_rate"]
 EPSILON = config["epsilon"]
@@ -48,22 +47,22 @@ class Model(pl.LightningModule):
                                                  top_p=0.95, 
                                                  num_return_sequences=1)
             for i, sample_output in enumerate(sample_outputs):
-                  logging.info("{}: {}".format(i, tokenizer.decode(sample_output, skip_special_tokens=True)))
+                  logging.debug("{}: {}".format(i, tokenizer.decode(sample_output, skip_special_tokens=True)))
         return loss
 
     def validation_step(self, batch, batch_idx):
         b_input_ids = batch[0]
         b_labels = batch[0]
         b_masks = batch[1]
-        
+
         loss = self(b_input_ids,
                     attention_mask=b_masks,
                     labels=b_labels)
-        
+
         self.log("valid_loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
 
     def configure_optimizers(self):
         return AdamW(self.model.parameters(),
-                  lr = LEARNING_RATE,
-                  eps = EPSILON
+                  lr=LEARNING_RATE,
+                  eps=EPSILON
                 )

@@ -1,7 +1,7 @@
-import pytorch_lightning as pl
-import urllib
-import subprocess
 from torch.utils.data import random_split, DataLoader, RandomSampler
+import pytorch_lightning as pl
+import subprocess
+import urllib
 
 from datasets.train.FoodDataset import FoodDataset
 from datasets.GPTDataset import GPTDataset

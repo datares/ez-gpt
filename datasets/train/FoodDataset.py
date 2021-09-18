@@ -17,7 +17,7 @@ class FoodDataset(Dataset):
         with open(self.path) as file:
             data = json.load(file)
         return data
-    
+
     def iter_over_json(self):
         data = self.read_json()
         recipie_strings = []

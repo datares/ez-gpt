@@ -1,11 +1,11 @@
 {
     "dataset": "data/recipes_raw_nosource_ar.json",
-    "load_from_checkpoint": true,
-    "checkpoint_path": "recipe-gpt/2aad4oii/checkpoints/epoch=8-step=160064.ckpt",
+    "load_from_checkpoint": false,
+    "checkpoint_path": "",
     "learning_rate": 5e-4,
     "batch_size": 2,
     "epsilon": 1e-8,
     "sample_every": 100,
-    "fast_train": true,
+    "fast_train": false,
     "logging_level": "INFO"
 }

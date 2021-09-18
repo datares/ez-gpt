@@ -1,17 +1,17 @@
+from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.loggers import WandbLogger
-from pytorch_lightning.callbacks import ModelCheckpoint
-from logging import basicConfig
-import logging
 from datetime import datetime
+import logging
+import os
 
-from model import Model
 from datasets.modules.DataModule import GPTDataModule
+from model import Model
 from config import config
 
 
 def main():
-    basicConfig(level=config["logging_level"])
+    logging.basicConfig(level=config["logging_level"])
 
     seed_everything(42)
 
@@ -19,12 +19,14 @@ def main():
 
     if config["load_from_checkpoint"]:
         ckpt_path = config["checkpoint_path"]
+        if ckpt_path == "" or not os.path.exists(ckpt_path):
+            raise ValueError(f"checkpoint path {ckpt_path} does not exist")
         logging.info(f"reloading {ckpt_path}")
         model = Model().load_from_checkpoint(ckpt_path)
     else:
         model = Model()
 
-    wandb_logger = WandbLogger(name="Test 2", project="recipe-gpt")
+    wandb_logger = WandbLogger(name=time, project="recipe-gpt")
 
     datamodule = GPTDataModule(dataset_name=config["dataset"])
 
