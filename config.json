@@ -1,0 +1,6 @@
+{
+    "learning_rate": 5e-4,
+    "batch_size": 10,
+    "epsilon": 1e-8,
+    "sample_every": 100
+}

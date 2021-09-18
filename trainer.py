@@ -1,10 +1,16 @@
 import pytorch_lightning as pl
-from transformers import AdamW, get_linear_schedule_with_warmup
+from transformers import AdamW
+from transformers import GPT2LMHeadModel, GPT2Config, GPT2LMHeadModel
+from config import config
 
-class Trainer(pl.LightningModule):
-    def __init__(self, model):
+LEARNING_RATE = config["learning_rate"]
+EPSILON = config["epsilon"]
+
+class Model(pl.LightningModule):
+    def __init__(self):
         super().__init__()
-        self.model = model
+        configuration = GPT2Config.from_pretrained('gpt2', output_hidden_states=False)
+        self.model = GPT2LMHeadModel.from_pretrained("gpt2", config=configuration)
 
     def forward(self, x):
         b_input_ids = x[0]
@@ -34,7 +40,7 @@ class Trainer(pl.LightningModule):
         loss = outputs[0]
         self.log("train_loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
         return loss
-    
+
     def validation_step(self, batch, batch_idx):
         b_input_ids = batch[0]
         b_labels = batch[0]
@@ -49,7 +55,7 @@ class Trainer(pl.LightningModule):
     
     def configure_optimizers(self):
         return AdamW(self.model.parameters(),
-                  lr = learning_rate,
-                  eps = epsilon
+                  lr = LEARNING_RATE,
+                  eps = EPSILON
                 )
 

@@ -1,4 +1,4 @@
-from transformers import GPT2LMHeadModel,  GPT2Tokenizer, GPT2Config, GPT2LMHeadModel
+from transformers import GPT2LMHeadModel,  GPT2Tokenizer, GPT2Config
 from transformers import AdamW, get_linear_schedule_with_warmup
 import numpy as np
 import torch
@@ -7,12 +7,6 @@ from dataloader import tokenizer
 import datetime
 import time
 from dataloader import train_dataloader, validation_dataloader
-
-seed_val = 42
-random.seed(seed_val)
-np.random.seed(seed_val)
-torch.manual_seed(seed_val)
-torch.cuda.manual_seed_all(seed_val)
 
 # I'm not really doing anything with the config buheret
 configuration = GPT2Config.from_pretrained('gpt2', output_hidden_states=False)
