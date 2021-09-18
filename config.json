@@ -1,6 +1,8 @@
 {
     "learning_rate": 5e-4,
-    "batch_size": 10,
+    "batch_size": 2,
     "epsilon": 1e-8,
-    "sample_every": 100
+    "sample_every": 100,
+    "fast_train": false,
+    "logging_level": "INFO"
 }

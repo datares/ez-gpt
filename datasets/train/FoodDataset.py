@@ -38,7 +38,7 @@ class FoodDataset(Dataset):
                 pass
         return recipie_strings
 
-if __name__ == "__main__":
-    data = FoodDataset("data/recipes_raw_nosource_fn.json", maxlen=None)
-    print(len(data))
-    print(data[10])
+# if __name__ == "__main__":
+#     data = FoodDataset("data/recipes_raw_nosource_fn.json", maxlen=None)
+#     print(len(data))
+#     print(data[10])

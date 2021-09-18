@@ -3,8 +3,8 @@ import urllib
 import subprocess
 from torch.utils.data import random_split, DataLoader, RandomSampler
 
-from FoodDataset import FoodDataset
-from TrainDataset import TrainDataset
+from datasets.train.FoodDataset import FoodDataset
+from datasets.GPTDataset import GPTDataset
 from tokenizer import tokenizer
 from config import config
 
@@ -16,15 +16,16 @@ class GPTDataModule(pl.LightningDataModule):
         super().__init__()
         self.dataset_name = dataset_name
         self.outdir = outdir
-
+ 
     def prepare_data(self):
-        urllib.request.urlretrieve("https://storage.googleapis.com/recipe-box/recipes_raw.zip")
-        subprocess.run(["mkdir", self.outdir])
-        subprocess.run(["unzip", "recipes_raw.zip", "-d", self.outdir])
-    
+        pass
+        # urllib.request.urlretrieve("https://storage.googleapis.com/recipe-box/recipes_raw.zip")
+        # subprocess.run(["mkdir", self.outdir])
+        # subprocess.run(["unzip", "recipes_raw.zip", "-d", self.outdir])
+
     def setup(self, stage=None):
-        self.food_data = FoodDataset(f"{self.outdir}/{self.dataset_name}", maxlen=100)
-        dataset = TrainDataset(self.food_data, tokenizer, max_length=768)
+        self.food_data = FoodDataset(f"{self.outdir}/{self.dataset_name}")
+        dataset = GPTDataset(self.food_data, tokenizer, max_length=768)
         train_size = int(0.9 * len(dataset))
         val_size = len(dataset) - train_size
 
@@ -32,14 +33,16 @@ class GPTDataModule(pl.LightningDataModule):
 
     def train_dataloader(self):
         return DataLoader(
-            self.train_dataset,  # The training samples.
+            self.train_dataset,
+            num_workers=8,
             sampler = RandomSampler(self.train_dataset), # Select batches randomly
-            batch_size = BATCH_SIZE # Trains with this batch size.
+            batch_size = BATCH_SIZE
         )
-    
-    def train_dataloader(self):
+
+    def val_dataloader(self):
         return DataLoader(
-            self.val_dataset,  # The training samples.
-            sampler = RandomSampler(self.val_dataset), # Select batches randomly
-            batch_size = BATCH_SIZE # Trains with this batch size.
+            self.val_dataset,
+            shuffle=False,
+            num_workers=8,
+            batch_size = BATCH_SIZE
         )
