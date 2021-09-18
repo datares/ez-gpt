@@ -1,4 +1,5 @@
 {
+    "dataset": "data/recipes_raw_nosource_ar.json",
     "learning_rate": 5e-4,
     "batch_size": 2,
     "epsilon": 1e-8,

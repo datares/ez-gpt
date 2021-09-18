@@ -12,10 +12,9 @@ BATCH_SIZE = config["batch_size"]
 
 
 class GPTDataModule(pl.LightningDataModule):
-    def __init__(self, dataset_name, outdir):
+    def __init__(self, dataset_name):
         super().__init__()
         self.dataset_name = dataset_name
-        self.outdir = outdir
  
     def prepare_data(self):
         pass
@@ -24,7 +23,7 @@ class GPTDataModule(pl.LightningDataModule):
         # subprocess.run(["unzip", "recipes_raw.zip", "-d", self.outdir])
 
     def setup(self, stage=None):
-        self.food_data = FoodDataset(f"{self.outdir}/{self.dataset_name}")
+        self.food_data = FoodDataset(f"{self.dataset_name}")
         dataset = GPTDataset(self.food_data, tokenizer, max_length=768)
         train_size = int(0.9 * len(dataset))
         val_size = len(dataset) - train_size

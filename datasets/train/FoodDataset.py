@@ -1,10 +1,10 @@
 from torch.utils.data import Dataset
 import json
 
+
 class FoodDataset(Dataset):
-    def __init__(self, path, maxlen=None):
+    def __init__(self, path):
         self.path = path
-        self.maxlen = maxlen
         self.recipies = self.iter_over_json()
 
     def __len__(self):
@@ -32,13 +32,6 @@ class FoodDataset(Dataset):
                     text += " "
                 text += recipie["instructions"].strip()
                 recipie_strings.append(text)
-                if self.maxlen is not None and idx > self.maxlen:
-                    break
             except Exception:
                 pass
         return recipie_strings
-
-# if __name__ == "__main__":
-#     data = FoodDataset("data/recipes_raw_nosource_fn.json", maxlen=None)
-#     print(len(data))
-#     print(data[10])

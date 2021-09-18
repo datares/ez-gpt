@@ -35,7 +35,7 @@ class Model(pl.LightningModule):
         # calls the forward method
         loss = self(b_input_ids,
                     labels=b_labels, 
-                    attention_mask = b_masks,
+                    attention_mask=b_masks,
                     token_type_ids=None)
 
         self.log("train_loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
@@ -56,7 +56,7 @@ class Model(pl.LightningModule):
         b_labels = batch[0]
         b_masks = batch[1]
         
-        loss = self(b_input_ids
+        loss = self(b_input_ids,
                     attention_mask=b_masks,
                     labels=b_labels)
         
