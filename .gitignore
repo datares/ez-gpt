@@ -3,3 +3,5 @@ recipes_raw.zip
 __pycache__/
 lightning_logs/
 wandb/
+recipe-gpt/
+checkpoints/

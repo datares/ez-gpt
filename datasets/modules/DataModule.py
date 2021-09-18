@@ -15,12 +15,6 @@ class GPTDataModule(pl.LightningDataModule):
     def __init__(self, dataset_name):
         super().__init__()
         self.dataset_name = dataset_name
- 
-    def prepare_data(self):
-        pass
-        # urllib.request.urlretrieve("https://storage.googleapis.com/recipe-box/recipes_raw.zip")
-        # subprocess.run(["mkdir", self.outdir])
-        # subprocess.run(["unzip", "recipes_raw.zip", "-d", self.outdir])
 
     def setup(self, stage=None):
         self.food_data = FoodDataset(f"{self.dataset_name}")
