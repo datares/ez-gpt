@@ -26,7 +26,7 @@ def main():
     else:
         model = Model()
 
-    wandb_logger = WandbLogger(name=time, project="recipe-gpt")
+    wandb_logger = WandbLogger(name=time, project="recipe-gpt") if not config["fast_train"] else None
 
     datamodule = GPTDataModule(dataset_name=config["dataset"])
 
@@ -36,13 +36,15 @@ def main():
     # automatically save model checkpoints based on min valid_loss
     checkpoint_callback = ModelCheckpoint(monitor="valid_loss",
                                           dirpath=f"checkpoints/{time}",
-                                          filename="recipe-gpt{epoch:02d}-{valid_loss:.2f}",
+                                          filename="recipe-gpt-{epoch:02d}-{valid_loss:.2f}",
                                           save_top_k=3,
                                           mode="min")
 
     trainer = Trainer(gpus=1,
                       limit_train_batches=fast_split,
                       limit_val_batches=fast_split,
+                      max_epochs=config["max_epochs"],
+                      precision=config["precision"],
                       logger=wandb_logger,
                       callbacks=[checkpoint_callback])
     trainer.fit(model, datamodule)

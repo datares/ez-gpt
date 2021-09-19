@@ -1,5 +1,6 @@
 from torch.utils.data import Dataset
 import json
+import glob
 
 
 class FoodDataset(Dataset):
@@ -14,8 +15,13 @@ class FoodDataset(Dataset):
         return self.recipies[idx]
 
     def read_json(self):
-        with open(self.path) as file:
-            data = json.load(file)
+        files = glob.glob(f"{self.path}/*.json")
+        data = {}
+        for file in files:
+            with open(file) as f:
+                recipes = json.load(f)
+                # merge the dicts
+                data = {**data, **recipes}
         return data
 
     def iter_over_json(self):

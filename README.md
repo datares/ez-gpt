@@ -18,7 +18,7 @@ Then to download the dataset, run
 ./scripts/data.sh
 ```
 which will download json files containing many recipes into the `data` directory.  There are are around 
-20000 examples.
+124000 recipes.
 
 ## Running the Model
 The model was tested using pytorch version 1.9.0 and cuda version 11.2.
@@ -27,7 +27,7 @@ To start training, run
 ```
 python main.py
 ```
-Model checkpoints will be saved automatically to the `lightning_logs` directory, so training can be restarted easily by
+Model checkpoints will be saved automatically to the `checkpoints` directory, so training can be restarted easily by
 reloading one of the checkpoints.
 
 A generated recipe is below

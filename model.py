@@ -1,4 +1,4 @@
-from transformers import GPT2LMHeadModel, GPT2Config, GPT2LMHeadModel, AdamW
+from transformers import GPT2LMHeadModel, GPT2Config, GPT2LMHeadModel, AdamW, get_linear_schedule_with_warmup
 import pytorch_lightning as pl
 import logging
 import random
@@ -8,7 +8,7 @@ from config import config
 
 LEARNING_RATE = config["learning_rate"]
 EPSILON = config["epsilon"]
-
+WARMUP_STEPS = config["opt_warmup_steps"]
 
 class Model(pl.LightningModule):
     def __init__(self):
@@ -62,7 +62,9 @@ class Model(pl.LightningModule):
         self.log("valid_loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
 
     def configure_optimizers(self):
-        return AdamW(self.model.parameters(),
+        optimizer = AdamW(self.model.parameters(),
                   lr=LEARNING_RATE,
                   eps=EPSILON
                 )
+
+        return optimizer
