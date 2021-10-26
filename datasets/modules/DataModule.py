@@ -21,16 +21,15 @@ class GPTDataModule(pl.LightningDataModule):
         self.dataset_path = dataset_path
 
     def setup(self, stage=None):
-        if self.dataset_type == "stack_overflow":
-            self.data = SODataset(self.dataset_path)
-        elif self.dataset_type == "food": 
-            self.data = FoodDataset(self.dataset_path)
-        elif self.dataset_type == "shakespeare":
-            self.data = ShakespeareDataset(self.dataset_path)
-        elif self.dataset_type == "drake":
-            self.data = DrakeDataset(self.dataset_path)
-        else:
+        ds_table = {
+            "stack_overflow": SODataset,
+            "food": FoodDataset,
+            "shakespeare": ShakespeareDataset,
+            "drake": DrakeDataset
+        }
+        if self.dataset_type not in ds_table.keys():
             raise KeyError(f"dataset {self.dataset_type} specified in the config.json is not allowed")
+        self.data = ds_table[self.dataset_type](self.dataset_path)
 
         dataset = GPTDataset(self.data, tokenizer, max_length=768)
         train_size = int(0.9 * len(dataset))

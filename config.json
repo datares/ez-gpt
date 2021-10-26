@@ -1,6 +1,6 @@
 {
     "dataset": "data/shakespeare.json",
-    "dataset_type": "shakespeare",
+    "dataset_type": "shakespeasqsare",
     "load_from_checkpoint": false,
     "checkpoint_path": "",
     "learning_rate": 5e-4,
