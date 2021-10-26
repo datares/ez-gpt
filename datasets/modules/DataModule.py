@@ -4,6 +4,7 @@ import subprocess
 import urllib
 
 from datasets.train.FoodDataset import FoodDataset
+from datasets.train.StackOverflowDataset import SODataset
 from datasets.GPTDataset import GPTDataset
 from tokenizer import tokenizer
 from config import config
@@ -12,13 +13,18 @@ BATCH_SIZE = config["batch_size"]
 
 
 class GPTDataModule(pl.LightningDataModule):
-    def __init__(self, dataset_name):
+    def __init__(self, dataset_path, dataset_type):
         super().__init__()
-        self.dataset_name = dataset_name
+        self.dataset_type = dataset_type 
+        self.dataset_path = dataset_path
 
     def setup(self, stage=None):
-        self.food_data = FoodDataset(f"{self.dataset_name}")
-        dataset = GPTDataset(self.food_data, tokenizer, max_length=768)
+        if self.dataset_type == "stack_overflow":
+            self.data = SODataset(self.dataset_path)
+        elif self.dataset_type == "food": 
+            self.data = FoodDataset(f"{self.dataset_path}")
+        
+        dataset = GPTDataset(self.data, tokenizer, max_length=768)
         train_size = int(0.9 * len(dataset))
         val_size = len(dataset) - train_size
 
