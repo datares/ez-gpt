@@ -28,7 +28,7 @@ def main():
 
     wandb_logger = WandbLogger(name=time, project="recipe-gpt") if not config["fast_train"] else None
 
-    datamodule = GPTDataModule(dataset_name=config["dataset"])
+    datamodule = GPTDataModule(dataset_name=config["dataset"], dataset_type=config["dataset_type"])
 
     # train on 1% of dataset to make sure it converges
     fast_split = .01 if config["fast_train"] else 1.0
