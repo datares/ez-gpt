@@ -3,7 +3,7 @@
     "load_from_checkpoint": false,
     "checkpoint_path": "",
     "learning_rate": 5e-4,
-    "batch_size": 3,
+    "batch_size": 2,
     "epsilon": 1e-8,
     "sample_every": 100,
     "max_epochs": 25,
