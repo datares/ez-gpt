@@ -11,6 +11,7 @@ cd recipe-gpt
 To setup the development environment, create a new conda environment with the following command
 ```
 conda create -n gpt python=3.8
+pip install -r requirements.txt
 ```
 
 Then to download the dataset, run

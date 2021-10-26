@@ -1,4 +1,4 @@
-from os import path
+# from os import path
 from torch.utils.data import Dataset
 import json
 import glob
@@ -8,9 +8,9 @@ import torch
 
 """"
 List of JSON Objects:
-​
+
 @json:
-​
+
     [
       {
       "Dataline": 1,
@@ -20,24 +20,24 @@ List of JSON Objects:
       "Player": "",
       "PlayerLine": "ACT I"
       }, ...
-​
+
 """
 
-class shakespeare_data(Dataset):
-    def __init__(self):
+class ShakespeareDataset(Dataset):
+    def __init__(self, path):
         #json object
-        self.open_file = self.download_data()
+        self.open_file = open(path)
         
         #preprocessed data
         self.torch_dataset = self.iter_over_json()
 
-    def __len__(self) -> int:
+    def __len__(self):
         """
         @return int is the length of the dataset
         """
         return len(self.torch_dataset)
 
-    def __getitem__(self, index) -> object:
+    def __getitem__(self, index):
         """
         @param index is the index
         @return is the string
@@ -64,9 +64,3 @@ class shakespeare_data(Dataset):
         #return list
         return shakespeare_data
 
-    def download_data(self):
-        url = 'https://drive.google.com/uc?export=download&id=1HORUqoc3DcDSyMwBhJT61T32Dfbdlsg-'
-        file = wget.download(url)
-        return open(file)
-
-torch_dataset = shakespeare_data()

@@ -5,6 +5,7 @@ import urllib
 
 from datasets.train.FoodDataset import FoodDataset
 from datasets.train.StackOverflowDataset import SODataset
+from datasets.train.ShakespeareDataset import ShakespeareDataset
 from datasets.GPTDataset import GPTDataset
 from tokenizer import tokenizer
 from config import config
@@ -22,8 +23,11 @@ class GPTDataModule(pl.LightningDataModule):
         if self.dataset_type == "stack_overflow":
             self.data = SODataset(self.dataset_path)
         elif self.dataset_type == "food": 
-            self.data = FoodDataset(f"{self.dataset_path}")
-        
+            self.data = FoodDataset(self.dataset_path)
+        elif self.dataset_type == "shakespeare":
+            self.data = ShakespeareDataset(self.dataset_path)
+
+
         dataset = GPTDataset(self.data, tokenizer, max_length=768)
         train_size = int(0.9 * len(dataset))
         val_size = len(dataset) - train_size

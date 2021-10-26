@@ -1,15 +1,15 @@
 {
-    "dataset": "data",
-    "dataset_type": "stack_overflow",
+    "dataset": "data/shakespeare.json",
+    "dataset_type": "shakespeare",
     "load_from_checkpoint": false,
     "checkpoint_path": "",
     "learning_rate": 5e-4,
-    "batch_size": 2,
+    "batch_size": 1,
     "epsilon": 1e-8,
     "sample_every": 100,
     "max_epochs": 25,
     "opt_warmup_steps": 1e2,
     "precision": 16,
-    "fast_train": false,
+    "fast_train": true,
     "logging_level": "INFO"
 }

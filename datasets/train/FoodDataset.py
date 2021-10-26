@@ -15,7 +15,7 @@ class FoodDataset(Dataset):
         return self.recipies[idx]
 
     def read_json(self):
-        files = glob.glob(f"{self.path}/*.json")
+        files = glob.glob(f"{self.path}")
         data = {}
         for file in files:
             with open(file) as f:
