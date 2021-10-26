@@ -1,5 +1,6 @@
 {
     "dataset": "data",
+    "dataset_type": "stack_overflow",
     "load_from_checkpoint": false,
     "checkpoint_path": "",
     "learning_rate": 5e-4,
