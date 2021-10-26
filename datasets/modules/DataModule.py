@@ -3,9 +3,10 @@ import pytorch_lightning as pl
 import subprocess
 import urllib
 
-from datasets.train.FoodDataset import FoodDataset
-from datasets.train.StackOverflowDataset import SODataset
 from datasets.train.ShakespeareDataset import ShakespeareDataset
+from datasets.train.StackOverflowDataset import SODataset
+from datasets.train.DrakeDataset import DrakeDataset
+from datasets.train.FoodDataset import FoodDataset
 from datasets.GPTDataset import GPTDataset
 from tokenizer import tokenizer
 from config import config
@@ -26,7 +27,10 @@ class GPTDataModule(pl.LightningDataModule):
             self.data = FoodDataset(self.dataset_path)
         elif self.dataset_type == "shakespeare":
             self.data = ShakespeareDataset(self.dataset_path)
-
+        elif self.dataset_type == "drake":
+            self.data = DrakeDataset(self.dataset_path)
+        else:
+            raise KeyError(f"dataset {self.dataset_type} specified in the config.json is not allowed")
 
         dataset = GPTDataset(self.data, tokenizer, max_length=768)
         train_size = int(0.9 * len(dataset))
