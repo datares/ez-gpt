@@ -24,12 +24,13 @@ class DrakeDataset(Dataset):
         return self.lyrics[idx]
 
     def read_json(self):
-        files = glob.glob(f"{self.path}/*.json")
+        files = glob.glob(f"{self.path}")
         for file in files:
           with open(file) as f:
             all_data = json.load(f)
-            data = {piece["lyrics_title"]: piece["lyrics"] for piece in all_data}
-        return data
+            data = {piece["lyrics_title"]: piece["lyrics"] for piece in all_data if piece["lyrics"] != None}
+            print(data)
+            return data
 
     def iter_over_json(self):
         data = self.read_json()
@@ -40,7 +41,6 @@ class DrakeDataset(Dataset):
                 text += key
                 text += data[key] # lyrics
                 lyrics_strings.append(text)
-                
             except Exception:
                 pass
         return lyrics_strings
