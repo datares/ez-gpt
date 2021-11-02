@@ -1,6 +1,6 @@
 {
-    "dataset": "data/shakespeare.json",
-    "dataset_type": "shakespeasqsare",
+    "dataset": "recipes-dataset/datares-stack-overflow/train.csv",
+    "dataset_type": "stack_overflow",
     "load_from_checkpoint": false,
     "checkpoint_path": "",
     "learning_rate": 5e-4,

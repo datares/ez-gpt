@@ -5,3 +5,5 @@ lightning_logs/
 wandb/
 recipe-gpt/
 checkpoints/
+recipes-dataset/recipes_raw_*
+recipes-dataset/LICENSE
