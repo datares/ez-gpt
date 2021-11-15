@@ -40,7 +40,6 @@ class DrakeDataset(Dataset):
                 text += key
                 text += data[key] # lyrics
                 lyrics_strings.append(text)
-                
             except Exception:
                 pass
         return lyrics_strings
