@@ -10,6 +10,6 @@
     "max_epochs": 25,
     "opt_warmup_steps": 1e2,
     "precision": 16,
-    "fast_train": true,
+    "fast_train": false,
     "logging_level": "INFO"
 }

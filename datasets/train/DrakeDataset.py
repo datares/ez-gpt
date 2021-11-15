@@ -29,7 +29,6 @@ class DrakeDataset(Dataset):
           with open(file) as f:
             all_data = json.load(f)
             data = {piece["lyrics_title"]: piece["lyrics"] for piece in all_data if piece["lyrics"] != None}
-            print(data)
             return data
 
     def iter_over_json(self):
