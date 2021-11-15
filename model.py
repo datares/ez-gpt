@@ -26,6 +26,18 @@ class Model(pl.LightningModule):
         loss = outputs[0]
         return loss
 
+    def generate(self):
+        sample_outputs = self.model.generate(
+                                            do_sample=True,   
+                                            top_k=50, 
+                                            # num_beams=5,
+                                                # no_repeat_ngram_size=2, 
+                                            max_length=200,
+                                            top_p=0.95,
+                                            num_return_sequences=1)
+
+        print(tokenizer.decode(sample_outputs[0], skip_special_tokens=True))
+
     def training_step(self, batch, batch_idx):
         b_input_ids = batch[0]
         b_labels = batch[0]
