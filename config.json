@@ -1,6 +1,6 @@
 {
     "dataset": "data/shakespeare.json",
-    "dataset_type": "shakespeasqsare",
+    "dataset_type": "shakespeare",
     "load_from_checkpoint": false,
     "checkpoint_path": "",
     "learning_rate": 5e-4,
@@ -10,6 +10,6 @@
     "max_epochs": 25,
     "opt_warmup_steps": 1e2,
     "precision": 16,
-    "fast_train": true,
+    "fast_train": false,
     "logging_level": "INFO"
 }
