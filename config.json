@@ -1,8 +1,8 @@
 {
-    "dataset": "data/drake_data.json",
-    "dataset_type": "drake",
+    "dataset": "data/shakespeare.json",
+    "dataset_type": "shakespeare",
     "load_from_checkpoint": false,
-    "checkpoint_path": "checkpoints/2021-11-01-18:16:23/recipe-gpt-epoch=02-valid_loss=0.11.ckpt",
+    "checkpoint_path": "",
     "learning_rate": 5e-4,
     "batch_size": 1,
     "epsilon": 1e-8,

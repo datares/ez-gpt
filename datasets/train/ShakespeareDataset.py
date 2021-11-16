@@ -55,12 +55,31 @@ class ShakespeareDataset(Dataset):
         shakespeare_data = []
 
         #unpack json
+        prev_player = None
+        lines = ""
+        i = 0
         for obj in data:
-            #grab the player, playerline
-            shakespeare_data.append(obj["Player"] + ": " + obj["PlayerLine"])
-    
-        #data = [Player: lines, Player: lines, Player: lines....]
+
+            if obj["Player"] != prev_player:
+                shakespeare_data.append(lines)
+                prev_player = obj["Player"]
+
+                lines = ""
+                lines += prev_player
+            
+            lines += " "
+            lines += obj["PlayerLine"]
+            
+            # i += 1
+            # if i > 50:
+            #     break
 
         #return list
         return shakespeare_data
 
+
+# ds = ShakespeareDataset("data/shakespeare.json")
+# print(len(ds))
+
+# for i in range(20):
+#     print(ds[i])
