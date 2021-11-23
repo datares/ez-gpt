@@ -1,4 +1,7 @@
-# EZ-GPT: Using GPT-2 to finetune on downstream language modeling tasks
+# EZ-GPT: Dead simple language modeling
+
+The goal of this project is to use GPT-2 to finetune on downstream language modeling tasks, and in the process 
+prepare a repository that makes it as simple as possible to train a text generation model on any dataset.
 
 ## Setup
 
@@ -31,8 +34,8 @@ which will download data files into the `data` directory.
 There is a `config.json` file to hangle the training configuration and hyperparameters
 ```json
 {
-    "dataset": "data/shakespeare.json", // data directory 
-    "dataset_type": "shakespeare", // name of dataset to train on 
+    "dataset": "data/shakespeare.json",
+    "dataset_type": "shakespeare",
     "load_from_checkpoint": false,
     "checkpoint_path": "",
     "learning_rate": 5e-4,
@@ -84,15 +87,47 @@ python generate.py checkpoints/shakespeare/shakespeare.ckpt
 Sample outputs for the Shakespeare generation are shown below
 
 ```txt
-CARDINAL WOLSEY [Within]    Pray you, I pray you, have some notice of my head.
-HELENA No sooner love but the love, that should be so. But when I was not the wife is so to my marriage.
-MISTRESS FORD You have my letter to his master, I will tell your mind.
-LORENZO My lord, to her, my lord, I thank her, and, sir. I have heard much like to her at the time, but that I am content to do any thing, I know not what: She brings all that do. I must have her on her.
-FLUELLEN Why, she's very strange, indeed, she has a great cause, Wh she hath a head to me: for that's a true man. Exit Re-enter Bawd Boult
-KING HENRY IV A strange thought shall be known to some other, And he will come to the court. It cannot be but a thousand, Nor never did him till that all the rest. Now he'll speak, and never will he live, Nor must I not live, Till 'tis but a man, but never, For there's a man.
-LORD POLONIUS 'Tis true: and I am sorry To what I'll say.
-BENEDICK I knew it not: if it please me so, I could never be out, for here.
-First Servingman I have thought the best words to tell your lordship.
-KING HENRY VI O, your highness knows the matter I'll tell me all the rest: so you may to me know: if you do meet them not in a way meet them to-morrow, your highness comes a very hand: I will speak with them at this last, and to them, let them be a subject to the field: and when I meet him, they'll draw upon us, make an end of him.
+CARDINAL WOLSEY
+        [Within]    Pray you, I pray you, have some notice of my head.
+HELENA
+        No sooner love but the love, that should be so. But when I was not the wife is so to my marriage.
+MISTRESS FORD
+        You have my letter to his master, I will tell your mind.
+LORENZO
+        My lord, to her, my lord, I thank her, and, sir. I have heard much like to her at the time, 
+        but that I am content to do any thing, I know not what: She brings all that do. 
+        I must have her on her.
+FLUELLEN
+        Why, she's very strange, indeed, she has a great cause, Wh she hath a head to me: for that's 
+        a true man. Exit Re-enter Bawd Boult
+KING HENRY IV
+        A strange thought shall be known to some other, And he will come to the court. It cannot 
+        be but a thousand, Nor never did him till that all the rest. Now he'll speak, and never will he 
+        live, Nor must I not live, Till 'tis but a man, but never, For there's a man.
+LORD POLONIUS
+        'Tis true: and I am sorry To what I'll say.
+BENEDICK
+        I knew it not: if it please me so, I could never be out, for here.
+First Servingman
+        I have thought the best words to tell your lordship.
+KING HENRY VI 
+        O, your highness knows the matter I'll tell me all the rest: so you may to me know: if you 
+        do meet them not in a way meet them to-morrow, your highness comes a very hand: I will 
+        speak with them at this last, and to them, let them be a subject to the field: and when 
+        I meet him, they'll draw upon us, make an end of him.
 ```
 
+## Extending
+It is very simple to use this repository to train a language model on a new dataset.
+
+Only a few changes need to be made
+1. Add a PyTorch dataset class to `datasets/train/` to define how data should be loaded into the model
+2. Import your PyTorch dataset in  `datasets/DataModule.py` and add the name of your dataset to the `ds_table` variable.  The key is the name of the dataset as it pertains to the `config.json`
+3. Update the `config.json`
+   1. `dataset` should be the path to the data to train the model
+   2. `dataset_type` should be the name of the dataset as defined in `DataModule.py`
+4. Start training by running `python main.py`
+
+The training losses can be viewed on Weights and Biases and the lowest three validation loss checkpoints are stored in the `checkpoints` directory.
+
+Hopefully this illustrates how simple it can be to train a language model on a downstream task with this repository.  Only 2 changes are needed in the actual codebase.
