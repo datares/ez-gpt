@@ -9,3 +9,6 @@ recipes-dataset/recipes_raw_*
 recipes-dataset/LICENSE
 *.pyc
 checkpoints/
+drake.txt
+shakespeare.txt
+

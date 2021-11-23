@@ -6,7 +6,6 @@ def main():
     model = Model().load_from_checkpoint(ckpt_path)
     for _ in range(10):
         model.generate()
-    # model.generate()
 
 
 if __name__ == "__main__":
