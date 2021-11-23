@@ -1,12 +1,13 @@
-from config import config
 from model import Model
-
+import sys
 
 def main():
-    ckpt_path = config["checkpoint_path"]
+    ckpt_path = sys.argv[1]
     model = Model().load_from_checkpoint(ckpt_path)
-    for i in range(10):
+    for _ in range(10):
         model.generate()
+    # model.generate()
+
 
 if __name__ == "__main__":
     main()
