@@ -82,3 +82,4 @@ Werkzeug==2.0.1
 wget==3.2
 yarl==1.6.3
 yaspin==2.1.0
+torchtext==0.10

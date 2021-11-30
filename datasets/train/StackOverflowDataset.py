@@ -15,17 +15,15 @@ class SODataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        return str(self.data.iloc[idx]['Title'])
+        return str(self.data[idx])
 
     def ParseData(self, path):
         df = pd.read_csv(path) 
-        df = df[['Id', 'Title']] 
-        print(df.head())
+        df = df['Title'] 
+        return list(df)
+    
 
-        return df
-
-
-data  = SODataset("./recipes-dataset/datares-stack-overflow/train.csv")
+# data  = SODataset("./recipes-dataset/datares-stack-overflow/train.csv")
 
 # for i in range(10): 
 #     print(data[i])
